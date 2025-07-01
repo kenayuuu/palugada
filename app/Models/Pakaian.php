@@ -12,7 +12,7 @@ class Pakaian extends Model
         'nama',
         'ukuran',
         'harga',
-        'cover_image'
+        'cover_image',
     ];
 
 }

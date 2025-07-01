@@ -5,7 +5,9 @@
 @section('content')
     <h3>Daftar Pakaian</h3>
 
+    @if(Auth::check() && Auth::user()->role === 'admin')
     <a href="{{ route('pakaian.create') }}" class="btn mb-3" style="background-color: #a200f3; color: white;">Tambah Pakaian</a>
+    @endif
 
     @if(session('success'))
         <div class="alert alert-success">
@@ -20,7 +22,9 @@
                 <th>Nama</th>
                 <th>Ukuran</th>
                 <th>Harga</th>
-                <th style="width: 1%; white-space: nowrap;">Aksi</th>
+                @if(Auth::check() && Auth::user()->role === 'admin')
+                    <th style="width: 1%; white-space: nowrap;">Aksi</th>
+                @endif
             </tr>
         </thead>
         <tbody>
@@ -34,16 +38,17 @@
                         @endforeach
                     </td>
                     <td>Rp {{ number_format($pakaian->harga, 0, ',', '.') }}</td>
-
-                    <td style="white-space: nowrap;">
-                        <a href="{{ route('pakaian.show', $pakaian->id) }}" class="btn btn-info btn-sm mb-1">Detail</a>
-                        <a href="{{ route('pakaian.edit', $pakaian->id) }}" class="btn btn-warning btn-sm mb-1">Edit</a>
-                        <form action="{{ route('pakaian.destroy', $pakaian->id) }}" method="POST" style="display:inline-block;">
-                            @csrf
-                            @method('DELETE')
-                            <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Yakin mau hapus?')">Hapus</button>
-                        </form>
-                    </td>
+                    @if(Auth::check() && Auth::user()->role === 'admin')
+                        <td style="white-space: nowrap;">
+                            <a href="{{ route('pakaian.show', $pakaian->id) }}" class="btn btn-info btn-sm mb-1">Detail</a>
+                            <a href="{{ route('pakaian.edit', $pakaian->id) }}" class="btn btn-warning btn-sm mb-1">Edit</a>
+                            <form action="{{ route('pakaian.destroy', $pakaian->id) }}" method="POST" style="display:inline-block;">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Yakin mau hapus?')">Hapus</button>
+                            </form>
+                        </td>
+                    @endif
                 </tr>
             @endforeach
         </tbody>

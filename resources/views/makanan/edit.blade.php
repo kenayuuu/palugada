@@ -8,7 +8,7 @@
 
 <form method="POST" enctype="multipart/form-data" action="{{ route('makanan.update', $makanan->id) }}">
     @csrf
-
+     @method('PUT')
 
     <div class="row mb-3">
         <label class="col-sm-2 col-form-label">Nama</label>

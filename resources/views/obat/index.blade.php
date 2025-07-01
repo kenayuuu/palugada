@@ -5,7 +5,9 @@
 @section('content')
     <h3>Daftar Obat</h3>
 
-    <a href="{{ route('obat.create') }}" class="btn mb-3" style="background-color: #a200f3; color: white;">Tambah Obat</a>
+    @if(Auth::check() && Auth::user()->role === 'admin')
+<a href="{{ route('obat.create') }}" class="btn mb-3" style="background-color: #a200f3; color: white;">Tambah Obat</a>
+@endif
 
     @if(session('success'))
         <div class="alert alert-success">
@@ -20,7 +22,9 @@
                 <th>Nama</th>
                 <th>Deskripsi</th>
                 <th>Harga</th>
-                <th style="width: 1%; white-space: nowrap;">Aksi</th>
+                @if(Auth::check() && Auth::user()->role === 'admin')
+                    <th style="width: 1%; white-space: nowrap;">Aksi</th>
+                @endif
 
             </tr>
         </thead>
@@ -31,15 +35,17 @@
                     <td>{{ $obat->nama }}</td>
                     <td>{{ $obat->deskripsi }}</td>
                     <td>Rp {{ number_format($obat->harga, 0, ',', '.') }}</td>
-                    <td style="white-space: nowrap;">
-                        <a href="{{ route('obat.show', $obat->id) }}" class="btn btn-info btn-sm" style="margin-bottom: 4px;">Detail</a>
-                        <a href="{{ route('obat.edit', $obat->id) }}" class="btn btn-warning btn-sm">Edit</a>
-                        <form action="{{ route('obat.destroy', $obat->id) }}" method="POST" style="display:inline-block;">
-                            @csrf
-                            @method('DELETE')
-                            <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Yakin mau hapus?')">Hapus</button>
-                        </form>
-                    </td>
+                    @if(Auth::check() && Auth::user()->role === 'admin')
+                        <td style="white-space: nowrap;">
+                            <a href="{{ route('obat.show', $obat->id) }}" class="btn btn-info btn-sm" style="margin-bottom: 4px;">Detail</a>
+                            <a href="{{ route('obat.edit', $obat->id) }}" class="btn btn-warning btn-sm">Edit</a>
+                            <form action="{{ route('obat.destroy', $obat->id) }}" method="POST" style="display:inline-block;">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Yakin mau hapus?')">Hapus</button>
+                            </form>
+                        </td>
+                    @endif
                 </tr>
             @endforeach
         </tbody>

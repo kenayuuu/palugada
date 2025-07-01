@@ -23,11 +23,11 @@ Route::delete('/obat/{id}/delete', [ObatController::class, 'destroy'])->middlewa
 
 Route::get('/makanan', [MakananController::class, 'index'])->middleware('auth')->name('makanan.index');
 Route::get('/makanan/create', [MakananController::class, 'create'])->name('makanan.create');
-Route::get('/makanan/{id}', [MakananController::class, 'show'])->name('makanan.show');
 Route::post('/makanan', [MakananController::class, 'store'])->middleware('auth')->name('makanan.store');
 Route::get('/makanan/{id}/edit', [MakananController::class, 'edit'])->middleware('auth')->name('makanan.edit');
-Route::post('/makanan/{id}', [MakananController::class, 'update'])->middleware('auth')->name('makanan.update');
+Route::put('/makanan/{id}', [MakananController::class, 'update'])->middleware('auth')->name('makanan.update');
 Route::delete('/makanan/{id}/delete', [MakananController::class, 'destroy'])->middleware('auth')->name('makanan.destroy');
+Route::get('/makanan/{id}', [MakananController::class, 'show'])->name('makanan.show');
 
 Route::get('/kategori', [KategoriController::class, 'index'])->middleware('auth')->name('kategori.index');
 Route::get('/kategori/create', [KategoriController::class, 'create'])->name('kategori.create');
@@ -41,5 +41,5 @@ Route::get('/pakaian/create', [PakaianController::class, 'create'])->name('pakai
 Route::get('/pakaian/{id}', [PakaianController::class, 'show'])->name('pakaian.show');
 Route::post('/pakaian', [PakaianController::class, 'store'])->middleware('auth')->name('pakaian.store');
 Route::get('/pakaian/{id}/edit', [PakaianController::class, 'edit'])->middleware('auth')->name('pakaian.edit');
-Route::post('/pakaian/{id}', [PakaianController::class, 'update'])->middleware('auth')->name('pakaian.update');
+Route::put('/pakaian/{id}', [PakaianController::class, 'update'])->middleware('auth')->name('pakaian.update');
 Route::delete('/pakaian/{id}/delete', [PakaianController::class, 'destroy'])->middleware('auth')->name('pakaian.destroy');
