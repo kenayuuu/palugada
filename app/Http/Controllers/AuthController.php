@@ -51,10 +51,35 @@ public function logout(Request $request): RedirectResponse
     return redirect('/');
 }
 
-public function dataPalugada()
-{
-    $obats = Obat::latest()->paginate(6);
+ public function registerForm()
+    {
+        return view('register');
+    }
+
+    public function register(Request $request)
+    {
+        // dd($request->all());
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'required|email|unique:users,email',
+            'password' => 'required|string|min:3|confirmed',
+        ]);
+
+        $user = \App\Models\User::create([
+            'name' => $request->name,
+            'email' => $request->email,
+            'password' => \Illuminate\Support\Facades\Hash::make($request->password),
+            'role' => 'user',
+        ]);
+
+        Auth::login($user);
+        return redirect('/')->with('success', 'Registrasi berhasil!');
+    }
+
+    public function dataPalugada()
+    {
+        $obats = Obat::latest()->paginate(6);
         return view('homepage', compact('obats'));
-}
+    }
 
 }

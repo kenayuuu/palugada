@@ -6,11 +6,12 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ObatController;
 use App\Http\Controllers\KategoriController;
 use App\Http\Controllers\PakaianController;
-use App\Http\Middleware\RoleAdmin;
 
 Route::get('/login', [AuthController::class, 'loginForm'])->name('login');
 Route::post('/login', [AuthController::class, 'login'])->name('login');
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
+Route::get('/register', [AuthController::class, 'registerForm'])->name('register');
+Route::post('/register', [AuthController::class, 'register']);
 
 Route::get('/', [ObatController::class, 'homepage']);
 Route::get('/obat', [ObatController::class, 'index'])->middleware('auth')->name('obat.index');
